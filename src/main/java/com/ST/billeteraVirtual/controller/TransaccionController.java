@@ -33,11 +33,11 @@ import org.springframework.web.bind.annotation.*;
         @PostMapping("")
         public ResponseEntity<?> save(@RequestBody Transaccion entity){
             try{
-                Transaccion nuevo =new Transaccion();
+           /*    Transaccion nuevo =new Transaccion();
                 Long idBilleteraDestino = entity.getBilleteraDestino().getId();
                 Double montoDestino= servicio.depositar(idBilleteraDestino, entity.getMontoMonedaDestino(), entity.getMonedaDestino());
-                nuevo.setMontoMonedaDestino(montoDestino);
-                return ResponseEntity.status(HttpStatus.OK).body(servicio.save(nuevo));
+                nuevo.setMontoMonedaDestino(montoDestino);*/
+                return ResponseEntity.status(HttpStatus.OK).body(servicio.save(entity));
             } catch (Exception e){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Error, la acción no ha sido posible.\"}");
             }

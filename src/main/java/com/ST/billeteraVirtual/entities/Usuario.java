@@ -45,7 +45,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn (name="billetera_id")
     )*/
     @OneToMany
-    private List<Billetera> billetera;
+    private List<Billetera> billeteras;
 
     /*@Column(name="saldoTotal")*/
     private Double saldoTotal;  /*Es la suma del saldo de todas las billeteras*/

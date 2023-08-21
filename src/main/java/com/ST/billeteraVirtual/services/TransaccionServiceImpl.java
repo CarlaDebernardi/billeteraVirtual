@@ -38,9 +38,10 @@ public class TransaccionServiceImpl{
     }
 
     @Transactional
-    public Transaccion save (Transaccion entity) throws Exception{
+    public Transaccion save(Transaccion entity) throws Exception{
         try {
             entity = transaccionRepository.save(entity);
+
             return entity;
         } catch (Exception e){
             throw new Exception(e.getMessage());
@@ -57,7 +58,8 @@ public class TransaccionServiceImpl{
             entityUpdate.setBilleteraDestino(entity.getBilleteraDestino());
             entityUpdate.setMonedaOrigen(entity.getMonedaOrigen());
             entityUpdate.setMonedaDestino(entity.getMonedaDestino());
-            entityUpdate = transaccionRepository.save(entity);
+            entityUpdate = transaccionRepository.save(entityUpdate);
+
             return entityUpdate;
         } catch (Exception e){
             throw new Exception(e.getMessage());
@@ -77,6 +79,10 @@ public class TransaccionServiceImpl{
         return false;
     }
 
+    public Transaccion registrarTransaccion(){
+
+        return null;
+    }
     public Double depositar(Long idBilleteraDeDestino, Double montoADepositar, String monedaADepositar) {
         Billetera billeteraDestino = null;
         Optional<Billetera> respuesta = billeteraRepository.findById(idBilleteraDeDestino);

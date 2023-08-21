@@ -1,5 +1,6 @@
 package com.ST.billeteraVirtual.services;
 
+import com.ST.billeteraVirtual.entities.Billetera;
 import com.ST.billeteraVirtual.entities.Usuario;
 import com.ST.billeteraVirtual.repositories.BilleteraRepository;
 import com.ST.billeteraVirtual.repositories.UsuarioRepository;
@@ -57,8 +58,12 @@ public class UsuarioServiceImpl{
             entityUpdate.setTelefono(entity.getTelefono());
             entityUpdate.setEmail(entity.getEmail());
             entityUpdate.setSaldoTotal(entity.getSaldoTotal());
-            entityUpdate.setBilletera(entity.getBilletera());
-            entityUpdate = usuarioRepository.save(entity);
+            List<Billetera> nuevas = entity.getBilleteras();
+            for (Billetera billetera: nuevas) {
+                billeteraRepository.save(billetera);
+            }
+            entityUpdate.setBilleteras(nuevas);
+            usuarioRepository.save(entityUpdate);
             return entityUpdate;
         } catch (Exception e){
             throw new Exception(e.getMessage());

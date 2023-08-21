@@ -30,6 +30,9 @@ public class Transaccion{
     @Enumerated(EnumType.STRING)
     private TipoDeOperacion tipoDeOperacion;
 
+    @OneToOne
+    private Billetera billetera;
+
     @ManyToOne
     /*@JoinColumn(name = "billeteraOrigen_id")*/
     private Billetera billeteraOrigen;

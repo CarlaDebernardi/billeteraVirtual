@@ -13,26 +13,22 @@ public class Billetera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    /*@Column(name="BTC")*/
-    @OneToOne
-    private Usuario usuario;
+
+    private String nombre;
 
     private Double BTC= 0.0;
 
-   /* @Column(name="ETH")*/
     private Double ETH= 0.0;
 
-    /*@Column(name="ARS")*/
     private Double ARS=0.0;
 
-    /*@Column(name="saldoEnARS")*/
     private Double saldo= 0.0;
 
-    @OneToMany /*(cascade = CascadeType.ALL, orphanRemoval = true)*/
-    /*@JoinTable(
+    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
             name="billetera_transaccion",
             joinColumns = @JoinColumn(name="billetera_id"),
-            inverseJoinColumns = @JoinColumn (name="transaccion_id"))*/
+            inverseJoinColumns = @JoinColumn (name="transaccion_id"))
     private List<Transaccion> transaccion;
 
 
