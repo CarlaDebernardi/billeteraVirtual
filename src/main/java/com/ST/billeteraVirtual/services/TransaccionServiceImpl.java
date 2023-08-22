@@ -88,18 +88,21 @@ public class TransaccionServiceImpl{
         Optional<Billetera> respuesta = billeteraRepository.findById(idBilleteraDeDestino);
         if (respuesta.isPresent()) {
             billeteraDestino = respuesta.get();
+
             if (monedaADepositar.equalsIgnoreCase("BTC")) {
                 Double montoAnterior = billeteraDestino.getBTC();
                 Double montoActual = montoADepositar + montoAnterior;
                 billeteraDestino.setBTC(montoActual);
                 billeteraRepository.save(billeteraDestino);
                 return billeteraDestino.getBTC();
+
             } else if (monedaADepositar.equalsIgnoreCase("ETH")) {
                 Double montoAnterior = billeteraDestino.getETH();
                 Double montoActual = montoADepositar + montoAnterior;
                 billeteraDestino.setETH(montoActual);
                 billeteraRepository.save(billeteraDestino);
                 return billeteraDestino.getETH();
+
             } else if (monedaADepositar.equalsIgnoreCase("ARS")) {
                 Double montoAnterior = billeteraDestino.getARS();
                 Double montoActual = montoADepositar + montoAnterior;

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +19,8 @@ import java.util.List;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    /*Para casos reales, utilizar @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")*/
     private Long id;
 
     /*@Column(name="dni")*/
@@ -45,7 +48,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn (name="billetera_id")
     )*/
     @OneToMany
-    private List<Billetera> billeteras;
+    private List<Billetera> billeteras= new ArrayList<>();
 
     /*@Column(name="saldoTotal")*/
     private Double saldoTotal;  /*Es la suma del saldo de todas las billeteras*/

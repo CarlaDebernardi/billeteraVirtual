@@ -1,6 +1,7 @@
 package com.ST.billeteraVirtual.services;
 
 import com.ST.billeteraVirtual.entities.Billetera;
+import com.ST.billeteraVirtual.entities.Transaccion;
 import com.ST.billeteraVirtual.repositories.BilleteraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class BilleteraServiceImpl {
 
     @Autowired
     private BilleteraRepository billeteraRepository;
+    @Autowired
+    public TransaccionServiceImpl transaccionService;
 
     /*public Double calcularSaldo(Long id) {
         Optional<Billetera> respuesta = billeteraRepository.findById(id);
@@ -58,13 +61,25 @@ public class BilleteraServiceImpl {
     @Transactional
     public Billetera save(Billetera entity) throws Exception {
         try {
+
             Billetera nueva = new Billetera();
-            nueva.setNombre(entity.getNombre());
+            Double saldoTotal= nueva.getSaldo();
             nueva.setARS(entity.getARS());
             nueva.setBTC(entity.getBTC());
             nueva.setETH(entity.getETH());
-            nueva.setTransaccion(entity.getTransaccion());
             nueva.setSaldo(calcularSaldo(entity.getARS(), entity.getBTC(), entity.getETH()));
+            if (entity.getTransaccion().isEmpty()) {
+                nueva.setTransaccion(entity.getTransaccion());
+            }else {
+                List<Transaccion> nuevas = entity.getTransaccion();
+                for (Transaccion transaccion : nuevas) {
+                    Double saldoSumar = transaccionService.depositar(entity.getId(), transaccion.getMontoMonedaDestino(), transaccion.getMonedaDestino());
+
+                    saldoTotal = saldoTotal + saldoSumar;
+                    billeteraRepository.save(nueva);
+                }
+            }
+            nueva.setSaldo(saldoTotal);
 
             billeteraRepository.save(nueva);
             return nueva;
@@ -73,12 +88,12 @@ public class BilleteraServiceImpl {
         }
     }
 
+
     @Transactional
     public Billetera update(Long id, Billetera entity) throws Exception {
         try {
             Optional<Billetera> entityOptional = billeteraRepository.findById(id);
             Billetera entityUpdate = entityOptional.get();
-            entityUpdate.setNombre(entity.getNombre());
             entityUpdate.setBTC(entity.getBTC());
             entityUpdate.setETH(entity.getETH());
             entityUpdate.setARS(entity.getARS());

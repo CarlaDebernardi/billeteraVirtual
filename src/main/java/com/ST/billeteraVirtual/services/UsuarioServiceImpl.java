@@ -47,7 +47,7 @@ public class UsuarioServiceImpl{
     }
 
     @Transactional
-    public Usuario update (Long id, Usuario entity) throws Exception{
+    public Usuario update (Long id, Usuario entity) throws Exception {
         try {
             Optional<Usuario> entityOptional = usuarioRepository.findById(id);
             Usuario entityUpdate = entityOptional.get();
@@ -58,16 +58,18 @@ public class UsuarioServiceImpl{
             entityUpdate.setTelefono(entity.getTelefono());
             entityUpdate.setEmail(entity.getEmail());
             entityUpdate.setSaldoTotal(entity.getSaldoTotal());
-            List<Billetera> nuevas = entity.getBilleteras();
-            for (Billetera billetera: nuevas) {
+            entityUpdate.setBilleteras(entity.getBilleteras());
+
+            /*for (Billetera billetera: nuevas) {
                 billeteraRepository.save(billetera);
             }
-            entityUpdate.setBilleteras(nuevas);
+            entityUpdate.setBilleteras(nuevas);*/
             usuarioRepository.save(entityUpdate);
             return entityUpdate;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+
     }
     @Transactional
     public boolean delete(Long id) throws Exception{
@@ -85,7 +87,5 @@ public class UsuarioServiceImpl{
 
    /* public Double calcularSaldoTotal (Long id){
 
-    }*/
-
-
+   */
 }

@@ -21,6 +21,8 @@ public class Transaccion{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    /*Para casos reales utilizar @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")*/
 
     @Temporal(TemporalType.TIMESTAMP)
     /*@Column(name="FechaHora")*/
@@ -29,9 +31,6 @@ public class Transaccion{
     /*@Column(name="tipo")*/
     @Enumerated(EnumType.STRING)
     private TipoDeOperacion tipoDeOperacion;
-
-    @OneToOne
-    private Billetera billetera;
 
     @ManyToOne
     /*@JoinColumn(name = "billeteraOrigen_id")*/
